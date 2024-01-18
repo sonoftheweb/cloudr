@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "darwin-arm64"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String          @id @default(uuid())
+  email             String          @unique
+  password          String
+  name              String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  projectUsers      ProjectUsers[]
+}
+
+model Projects {
+  id                String          @id @default(uuid())
+  name              String          @unique @db.VarChar(255)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  projectUsers      ProjectUsers[]
+  projectAttributes ProjectAttributes[]
+  projectAssets     ProjectAssets[]
+}
+
+model ProjectUsers {
+  id        Int                     @id @default(autoincrement())
+  projectId String
+  project   Projects                @relation(fields: [projectId], references: [id])
+  userId    String
+  user      User                    @relation(fields: [userId], references: [id])
+  isOwner   Boolean                 @default(false)
+  createdAt DateTime                @default(now())
+  updatedAt DateTime                @updatedAt
+}
+
+model ProjectAttributes {
+  id        Int                     @id @default(autoincrement())
+  projectId String
+  project   Projects                @relation(fields: [projectId], references: [id])
+  settings  Json                    @db.Json
+  createdAt DateTime                @default(now())
+  updatedAt DateTime                @updatedAt
+}
+
+model ProjectAssets {
+  id        Int                     @id @default(autoincrement())
+  projectId String
+  project   Projects                @relation(fields: [projectId], references: [id])
+  name      String                  @unique @db.VarChar(255)
+  key       String                  @unique @db.VarChar(255)
+  settings  Json                    @db.Json
+  createdAt DateTime                @default(now())
+  updatedAt DateTime                @updatedAt
+}

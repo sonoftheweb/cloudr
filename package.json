@@ -1,0 +1,28 @@
+{
+  "name": "nuxt-app",
+  "devDependencies": {
+    "@pinia/nuxt": "latest",
+    "@prisma/client": "^5.8.1",
+    "@types/bcrypt": "^5.0.2",
+    "nuxt": "^3.9.3",
+    "prisma": "^5.8.1",
+    "sass": "^1.70.0",
+    "vue": "^3.4.14",
+    "vue-router": "^4.2.5",
+    "vuetify-nuxt-module": "latest"
+  },
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "type": "module",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "vee-validate": "^4.12.4",
+    "zod": "^3.22.4"
+  }
+}
